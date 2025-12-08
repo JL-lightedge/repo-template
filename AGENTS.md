@@ -139,5 +139,5 @@ For session flow, see `docs/coding-session-template.md`.
 - If roles listed above are missing in `/agents/`, Codex should **scaffold** them using the skeleton in `/agents/README.md`.
 - Codex should also scaffold `COMMUNICATION.md` and the two docs in §10 if absent.
 - CI or pre‑commit must **fail** when: (a) this `AGENTS.md` is missing, or (b) any Role Registry file is missing.
-- See `scripts/verify-agents.sh` and `.github/workflows/agents-guard.yml` for enforcement.
+- Enforcement script: `scripts/verify-agents.sh` (currently invoked manually). Add a CI workflow to call it when CI is introduced.
 
