@@ -10,6 +10,7 @@ if [ -z "${AGENTS}" ]; then
   exit 1
 fi
 for f in $AGENTS; do
-  if [ ! -f "$f" ]; then echo "Missing role doc: $f"; MISSING=1; fi
+  path="${f#/}"
+  if [ ! -f "$path" ]; then echo "Missing role doc: $path"; MISSING=1; fi
 done
 exit $MISSING
