@@ -1,0 +1,36 @@
+name: Refresh Model Version
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Refresh MODEL_VERSION
+        env:
+          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+        run: ./scripts/refresh-model.sh
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ github.token }}
+          commit-message: "chore: refresh MODEL_VERSION"
+          branch: chore/refresh-model-version
+          title: "Chore: refresh MODEL_VERSION"
+          body: |
+            Updates MODEL_VERSION from Connectria/gpt-model-registry.
+          labels: |
+            automation

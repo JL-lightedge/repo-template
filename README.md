@@ -22,6 +22,7 @@ AGENTS.overrides.md           # fill in project-specific commands (build/test/li
 .gitignore                    # sensible defaults
 TODO.md, DECISIONS.md         # roadmap + architecture log
 FAILURE.log                   # quick capture during failure/debug cycles
+MODEL_VERSION                 # current GPT model (synced from gpt-model-registry)
 
 agents/                       # role profiles (keep this list tight per repo)
   backend-architect.md
@@ -38,11 +39,13 @@ docs/
 
 scripts/
   verify-agents.sh            # CI guard: fails if Role Registry files are missing
+  refresh-model.sh            # syncs MODEL_VERSION from the registry
 
 .github/
   pull_request_template.md    # PR checklist mirrors AGENTS.md
   workflows/
     agents-guard.yml          # runs verify-agents.sh on push/PR
+    refresh-model.yml         # weekly/manual model sync that opens a PR
 ```
 
 ---
@@ -53,7 +56,9 @@ scripts/
 2. Open `AGENTS.md` and **keep the Role Registry lean** (only roles you want active here).
 3. Fill in `AGENTS.overrides.md` with this repo’s **build/test/lint/CI** commands.
 4. Confirm **GitHub Actions** is enabled for the repo.
-5. Commit + push. The `agents-guard` workflow will enforce presence.
+5. Add a repo secret `REGISTRY_TOKEN` with read access to `Connectria/gpt-model-registry` (fine-grained PAT with `contents:read` is enough).
+6. Commit + push. The `agents-guard` workflow will enforce presence.
+7. Run the **Refresh Model Version** workflow (manual or wait for the schedule) to sync `MODEL_VERSION`.
 
 **Local:**
 ```bash
@@ -109,4 +114,3 @@ PRs welcome. Please follow the **PR template** and keep changes small with clear
 
 ## License
 Choose a license (MIT/Apache-2.0/etc.) and drop it in `LICENSE`.
-
