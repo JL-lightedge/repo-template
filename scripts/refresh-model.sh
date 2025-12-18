@@ -33,19 +33,20 @@ if [ "$HTTP_STATUS" -ge 400 ]; then
   exit 1
 fi
 
-CONTENT=$(python3 - "${TMP_FILE}.json" <<'PY'
-import base64, json, sys
+if [ ! -s "${TMP_FILE}.json" ]; then
+  echo "Registry response missing."
+  exit 1
+fi
+
+CONTENT=$(python3 -c 'import base64, json, sys
 data = json.load(open(sys.argv[1], "r"))
 encoded = data.get("content")
 if not encoded:
     sys.exit(1)
 decoded = base64.b64decode(encoded).decode("utf-8")
-# Normalize trailing newline
 if not decoded.endswith("\n"):
     decoded += "\n"
-sys.stdout.write(decoded)
-PY
-) || {
+sys.stdout.write(decoded)' "${TMP_FILE}.json") || {
   echo "Failed to decode MODEL_VERSION content."
   exit 1
 }
