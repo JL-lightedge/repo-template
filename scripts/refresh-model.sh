@@ -33,7 +33,7 @@ if [ "$HTTP_STATUS" -ge 400 ]; then
   exit 1
 fi
 
-CONTENT=$(python3 - <<'PY'
+CONTENT=$(python3 - "${TMP_FILE}.json" <<'PY'
 import base64, json, sys
 data = json.load(open(sys.argv[1], "r"))
 encoded = data.get("content")
@@ -45,7 +45,7 @@ if not decoded.endswith("\n"):
     decoded += "\n"
 sys.stdout.write(decoded)
 PY
-"${TMP_FILE}.json") || {
+) || {
   echo "Failed to decode MODEL_VERSION content."
   exit 1
 }
