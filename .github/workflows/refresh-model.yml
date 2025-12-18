@@ -36,44 +36,13 @@ jobs:
         if: steps.diff.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          branch="chore/refresh-model-version"
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -B "$branch"
-          git add MODEL_VERSION
-          git commit -m "chore: refresh MODEL_VERSION"
-          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$branch"
-
-      - name: Open pull request
-        if: steps.diff.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
           BASE: ${{ github.event.repository.default_branch }}
         run: |
           BASE="${BASE:-main}"
-          branch="chore/refresh-model-version"
-          api="https://api.github.com/repos/$REPO/pulls"
-          body=$(jq -n \
-            --arg title "Chore: refresh MODEL_VERSION" \
-            --arg head "$branch" \
-            --arg base "$BASE" \
-            --arg body "Updates MODEL_VERSION from Connectria/gpt-model-registry." \
-            '{title:$title, head:$head, base:$base, body:$body}')
-          status=$(curl -s -o /tmp/pr.json -w "%{http_code}" \
-            -X POST "$api" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d "$body")
-          if [ "$status" -ge 300 ]; then
-            if [ "$status" -eq 422 ] && grep -q "A pull request already exists" /tmp/pr.json; then
-              echo "PR already exists for $branch; continuing."
-              exit 0
-            fi
-            echo "PR creation failed with status $status"
-            cat /tmp/pr.json
-            exit 1
-          fi
-          echo "PR created:"
-          cat /tmp/pr.json
+          git fetch origin "$BASE"
+          git checkout "$BASE"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add MODEL_VERSION
+          git commit -m "chore: refresh MODEL_VERSION"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:"$BASE"
