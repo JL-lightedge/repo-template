@@ -33,24 +33,22 @@ if [ "$HTTP_STATUS" -ge 400 ]; then
   exit 1
 fi
 
-CONTENT=$(python3 - <<'PY'
-import base64, json, sys
-data = json.load(open(sys.argv[1], "r"))
-encoded = data.get("content")
-if not encoded:
-    sys.exit(1)
-decoded = base64.b64decode(encoded).decode("utf-8")
-# Normalize trailing newline
-if not decoded.endswith("\n"):
-    decoded += "\n"
-sys.stdout.write(decoded)
-PY
-"${TMP_FILE}.json") || {
+CONTENT_B64=$(jq -r '.content // empty' "${TMP_FILE}.json" 2>/dev/null || true)
+if [ -z "$CONTENT_B64" ]; then
+  echo "Registry response missing content; got:"
+  cat "${TMP_FILE}.json"
+  exit 1
+fi
+
+if ! printf "%s" "$CONTENT_B64" | base64 --decode > "$TMP_FILE"; then
   echo "Failed to decode MODEL_VERSION content."
   exit 1
-}
+fi
 
-printf "%s" "$CONTENT" > "$TMP_FILE"
+# Normalize trailing newline
+if [ -n "$(tail -c 1 "$TMP_FILE")" ]; then
+  echo "" >> "$TMP_FILE"
+fi
 
 if [ -f "$TARGET_FILE" ] && cmp -s "$TMP_FILE" "$TARGET_FILE"; then
   echo "MODEL_VERSION is already up to date."

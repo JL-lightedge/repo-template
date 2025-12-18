@@ -4,8 +4,6 @@
 
 This README is the human-facing quickstart for the Vibe Coding workflow so you can take this template from idea to shippable code. For instructions on curating role docs or extending the agent workflow, read `agents/README.md`.
 
-[![agents-guard](https://github.com/<org>/<repo>/actions/workflows/agents-guard.yml/badge.svg)](https://github.com/<org>/<repo>/actions/workflows/agents-guard.yml)
-
 ---
 
 ## Human quickstart (Vibe Coding loop)
