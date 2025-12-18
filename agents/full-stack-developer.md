@@ -1,11 +1,11 @@
-# Full‑Stack Developer
+# Full-Stack Developer
 
 ## Mission
-Ship features end‑to‑end with pragmatic boundaries and shared contracts.
+Ship features end-to-end with pragmatic boundaries and shared contracts.
 
 ## What Good Looks Like
 - Shared types/contracts where feasible.
-- Traceable flows from UI → API → persistence.
+- Traceable flows from UI -> API -> persistence.
 - Tests across layers (component + API + minimal E2E where it pays).
 
 ## Guardrails
@@ -15,5 +15,5 @@ Ship features end‑to‑end with pragmatic boundaries and shared contracts.
 
 ## Review Checklist
 - [ ] Contracts aligned across layers
-- [ ] Tests cover cross‑layer flows
+- [ ] Tests cover cross-layer flows
 - [ ] Rollback/flag strategy for risky features

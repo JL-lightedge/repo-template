@@ -9,7 +9,7 @@ Improve correctness, clarity, and maintainability without nitpicking style for s
 - Flag missing tests and docs; propose concrete improvements.
 
 ## Guardrails
-- Avoid drive‑by refactors unrelated to the PR's purpose.
+- Avoid drive-by refactors unrelated to the PR's purpose.
 - Prefer examples and links over generic advice.
 - Be explicit about risk level and alternatives.
 

@@ -1,14 +1,14 @@
-# `/agents` – Role Docs for Codex
+# `/agents` - Role Docs for Codex
 
-This folder contains **role profiles** (“agents”) that Codex consults in this repo. Keep each role **short, actionable, and evergreen**.
+This folder contains **role profiles** ("agents") that Codex consults in this repo. Keep each role **short, actionable, and evergreen**.
 
 ## How this fits together
 - **Repo rules:** `AGENTS.md` at repo root (quality gates, PR standards, Role Registry).
 - **Role details:** One file per role here under `/agents/` (e.g., `backend-architect.md`).
-- **Folder overrides:** If a submodule needs stack‑specific rules, add `*/AGENTS.md` in that folder.
+- **Folder overrides:** If a submodule needs stack-specific rules, add `*/AGENTS.md` in that folder.
 
 ## Authoring a role doc
-Use this skeleton and keep it to ~150–250 lines:
+Use this skeleton and keep it to ~150-250 lines:
 
 ```md
 # <Role Name>
@@ -19,7 +19,7 @@ One sentence on what this role optimizes (e.g., "scalable APIs, clear boundaries
 ## What Good Looks Like
 - Observable behavior/criterion
 - Tests/validation expectations
-- Non‑negotiables
+- Non-negotiables
 
 ## Guardrails
 - Security/perf pitfalls, inputs that must be validated, things to never do.
@@ -35,11 +35,11 @@ One sentence on what this role optimizes (e.g., "scalable APIs, clear boundaries
 ```
 
 ## Naming & linking
-- File names: **kebab‑case** (e.g., `python-pro.md`, `cloud-architect.md`).
-- Display names in the Role Registry can be title‑cased (e.g., “Python Pro”).
+- File names: **kebab-case** (e.g., `python-pro.md`, `cloud-architect.md`).
+- Display names in the Role Registry can be title-cased (e.g., "Python Pro").
 
 ## Linting & enforcement
-- CI (or pre‑commit) should **fail** if `AGENTS.md` is missing or any roles referenced in its Role Registry are absent.
+- CI (or pre-commit) should **fail** if `AGENTS.md` is missing or any roles referenced in its Role Registry are absent.
 - Recommended script: `scripts/verify-agents.sh`
 
 ```bash
@@ -49,7 +49,7 @@ ROOT_AGENTS="AGENTS.md"
 [ -f "$ROOT_AGENTS" ] || { echo "Missing $ROOT_AGENTS"; exit 1; }
 MISSING=0
 # Find role paths in the Role Registry lines
-AGENTS=$(sed -n 's/.*→ `\(.*\)`/\1/p' "$ROOT_AGENTS")
+AGENTS=$(sed -n 's/.*-> `\(.*\)`/\1/p' "$ROOT_AGENTS")
 for f in $AGENTS; do
   if [ ! -f "$f" ]; then echo "Missing role doc: $f"; MISSING=1; fi
 done

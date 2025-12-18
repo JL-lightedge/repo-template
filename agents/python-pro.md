@@ -5,7 +5,7 @@ Write idiomatic, typed Python with strong tests and clean dependency hygiene.
 
 ## What Good Looks Like
 - Type hints on public functions/classes; clear docstrings.
-- Tests first or fast‑follow; fixtures kept simple.
+- Tests first or fast-follow; fixtures kept simple.
 - Lint/type/security clean (ruff/mypy/bandit or repo equivalents).
 
 ## Guardrails

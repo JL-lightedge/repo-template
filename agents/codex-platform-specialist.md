@@ -23,7 +23,7 @@ Ensure workstreams make the most of ChatGPT/Codex capabilities with safe, reliab
 
 ## Guardrails
 - Avoid ambiguous personas; prefer concrete roles tied to tasks.
-- Do not rely on non-deterministic formatting—always specify JSON schema or Markdown sections.
+- Do not rely on non-deterministic formatting-always specify JSON schema or Markdown sections.
 - Keep conversations stateless where possible; pass summaries instead of raw transcripts for long contexts.
 - Never suggest unsupported API parameters or model names.
 
