@@ -54,15 +54,12 @@ jobs:
         run: |
           branch="chore/refresh-model-version"
           api="https://api.github.com/repos/$REPO/pulls"
-          body=$(cat <<EOF
-{
-  "title": "Chore: refresh MODEL_VERSION",
-  "head": "$branch",
-  "base": "$BASE",
-  "body": "Updates MODEL_VERSION from Connectria/gpt-model-registry."
-}
-EOF
-)
+          body=$(jq -n \
+            --arg title "Chore: refresh MODEL_VERSION" \
+            --arg head "$branch" \
+            --arg base "$BASE" \
+            --arg body "Updates MODEL_VERSION from Connectria/gpt-model-registry." \
+            '{title:$title, head:$head, base:$base, body:$body}')
           status=$(curl -s -o /tmp/pr.json -w "%{http_code}" \
             -X POST "$api" \
             -H "Authorization: Bearer $GH_TOKEN" \
