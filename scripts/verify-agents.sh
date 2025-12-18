@@ -55,8 +55,9 @@ for role in "${listed_roles[@]}"; do
   if [ ! -f "agents/$role" ]; then
     fail "Listed role missing from agents/: agents/$role"
   fi
-  if [ ! -f "agents_full/$role" ]; then
-    fail "Listed role missing from agents_full/: agents_full/$role"
+  match=$(find agents_full -type f -name "$role" -print -quit)
+  if [ -z "$match" ]; then
+    fail "Listed role missing from agents_full/: $role"
   fi
 done
 
@@ -70,8 +71,9 @@ for path in agents/*; do
     fail "Unexpected entry in agents/: $base"
     continue
   fi
-  if [ ! -f "agents_full/$base" ]; then
-    fail "agents/$base does not have a matching file in agents_full/"
+  match=$(find agents_full -type f -name "$base" -print -quit)
+  if [ -z "$match" ]; then
+    fail "agents/$base does not have a matching file anywhere under agents_full/"
   fi
   case "$base" in
     *.md) ;;
