@@ -52,6 +52,7 @@ jobs:
           REPO: ${{ github.repository }}
           BASE: ${{ github.event.repository.default_branch }}
         run: |
+          BASE="${BASE:-main}"
           branch="chore/refresh-model-version"
           api="https://api.github.com/repos/$REPO/pulls"
           body=$(jq -n \
