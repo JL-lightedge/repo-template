@@ -6,7 +6,7 @@ This README is the human-facing quickstart for the Vibe Coding workflow so you c
 
 ---
 
-## Human quickstart (Vibe Coding loop)
+## Quickstart
 
 ### Step 1: Start the AI kickoff interview
 Open your AI coding agent (Codex or another agent) and paste the Kickoff Prompt below. The agent now runs a short interview,
